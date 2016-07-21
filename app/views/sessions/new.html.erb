@@ -1,0 +1,81 @@
+<style>
+  input[type="text"] {
+    width: 100%;
+    font-size: 20px;
+    border-radius: 5px;
+    padding-left: 5px;
+    height: 50px;
+
+  }
+
+
+  body {
+    margin-top: 70px;
+    font-family: Crimson Text;
+    font-size: 17px;
+
+  }
+  input[type="password"] {
+    width: 100%;
+    font-size: 20px;
+    border-radius: 5px;
+    height: 50px;   
+  }
+  .btn-secondary {
+    width: 100%;
+    font-size: 20px;
+    height: 50px;
+    background-color: #3fb2bb;
+    color: white;
+  }
+  .row {
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+  .container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  h1 {
+    text-align: center;
+  }
+</style>
+
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand">Dipshikha's Blog</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to 'Home', '/categories' %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+<div class="container">
+<div class = "row">
+<div class = "col-md-6 col-md-offset-3">
+  <% if @error %>
+      <h3 style = "color: red"><%= @error %></h3>
+  <% end %>
+  <h1>Login</h1>
+  <form action = "/sessions" method = "POST">
+      <label for = "username"><h3>Username: </h3></label></br>
+      <input name = "username" type = "text" placeholder="Username"></br></br>
+      <label for = "password"><h3>Password:</h3></label></br>
+      <input name = "password" type = "password" placeholder="Password"></br></br>
+      <input name = "authenticity_token" value = "<%= form_authenticity_token() %>" type = "hidden">
+      <button class = "btn btn-secondary">Sign In</button>
+  </form>
+</div>
+</div>
+</div>

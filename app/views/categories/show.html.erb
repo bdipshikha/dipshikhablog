@@ -1,0 +1,136 @@
+<head>
+	<link href='https://fonts.googleapis.com/css?family=Droid+Serif|Lobster|Yanone+Kaffeesatz|Crimson+Text' rel='stylesheet' type='text/css'>
+</head>
+
+<style>
+	img {
+		width: 100px;
+		height: 100px;
+	}
+	hr {
+		border-color: #b3b3b3;
+	}
+	.three-col {
+ 		 -webkit-columns: 3 180px;
+     	-moz-columns: 3 180px;
+       	columns: 3 180px;
+	}
+	body {
+		margin-top: 70px;
+		font-family: Crimson Text;
+		font-size: 17px;
+	}
+
+	.button {
+		height: 30px;
+		font-size: 18px;
+		background-color: #3fb2bb;
+		color: white;
+
+	}
+	#search_field {
+		height: 30px;
+		width:70%;
+		font-size: 18px;
+		margin-right: 10px;
+		padding-right: 10px;
+		padding-left: 5px;
+	}
+	.row {
+    	margin-right: -15px;
+    	margin-left: -15px;
+	}
+	.container {
+    	padding-right: 15px;
+    	padding-left: 15px;
+    	margin-right: auto;
+    	margin-left: auto;
+	}
+
+</style>
+	
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand">Dipshikha's Blog</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+          	<li><%= link_to 'Home', '/categories' %></li>
+          	<% if current_user %>
+          		<li><%= link_to 'New Post', '/categories/' + @category.id.to_s + '/posts/new' %></li>
+          	<% end %>
+          	<% if @is_category_creator %>
+          		<li><%= link_to 'Delete', @category, method: :delete %></li>
+							<li><%= link_to 'Edit', '/categories/' + @category.id.to_s + '/edit' %></li>
+						<% end %>
+						<% if current_user %>
+          		<li><a method="GET" href="/logout">Logout</a></li>
+          	<% end %>			
+						<li><%= link_to 'Login', '/sessions/new' %></li>
+						<li><%= link_to 'Sign Up', '/users/new' %></li>
+          </ul>
+        </div>
+      </div>
+   	</div>
+	
+   	<div class = "container">
+	<div class = "row">
+		<div class = "col-md-10 col-md-offset-1">
+			<div class = "row">
+				<div class = "col-md-8">
+					<img style="width:100%; height:300px;"src="<%= @category.image %>"></br></br>						
+						<h3><%= @category.title %></h3></br>
+						by <b><%= @category_user_name.upcase %></b> created at <%= @category.created_at %></br></br>
+						
+							<p class = "three-col"><%= @category.content %></p>
+				</div>
+				<div class = "col-md-4" style="padding-left:30px;">
+					<hr>
+					<div class = "row">
+						<div class = "col-md-12">
+							<h5>SEARCH</h5></br>
+							<%= form_tag :controller => 'posts', :action => 'search', :method => 'get'  do %>
+      					<%= text_field_tag :search, params[:search], placeholder: "Search for .....", :id => 'search_field' %>
+      					<%= submit_tag "Search", :name => nil, class: "button" %> 
+  						<% end %>
+  					</div>
+  				</div></br>
+  				<hr>
+  				<div class = "row">
+  					<div class = "col-md-12">
+  						<h5>POSTS</h5></br>
+							<% @category.posts.each do |post| %>
+								<%= link_to (post.title), '/categories/' + @category.id.to_s + '/posts/' + post.id.to_s %></br>
+							<% end %>
+						</div>
+					</div></br>
+					<hr>
+					<div class = "row">
+						<div class = "col-md-12">
+							<h5>ARCHIVES</h5></br>
+    						<% @posts_month.each do |month, posts| %>
+    							<a href='/archive/<%= month %>'><%= month %></a></br>
+    						<% end %>
+						</div>
+					</div>
+					<hr>
+					<div class = "row">
+						<h5 style="padding-left:12px;">FEATURED GALLERY</h5></br>
+						<% @category.posts.each do |post| %>
+							<div class = "col-md-4 col-xs-6" style="padding-bottom:8px;">
+								<%= link_to image_tag(post.image), '/slideshow' %>
+							</div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
